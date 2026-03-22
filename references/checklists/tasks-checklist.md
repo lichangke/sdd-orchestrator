@@ -57,6 +57,7 @@
 
 ## 5. 状态与联动
 - [ ] `tasks.md` 当前状态与实际一致
+- [ ] 若结论为“可以进入 Execution Contract”，已先将 `tasks.md` 头部状态回写为“已确认”
 - [ ] 若任务有更新，已检查 `execution-contract.md` 是否需同步调整
 - [ ] 若任务范围变化，已检查 `review.md` 范围定义是否需同步调整
 - [ ] `sdd-status.md` 已同步当前进展

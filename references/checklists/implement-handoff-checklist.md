@@ -63,6 +63,7 @@
 
 ## 6. 状态与联动
 - [ ] `execution-contract.md` 当前状态与实际一致
+- [ ] 若结论为“可以进入 Implement”，已先将 `execution-contract.md` 头部状态回写为“已确认”
 - [ ] `sdd-status.md` 已更新到可进入 Implement 的状态
 - [ ] 当前中断点已清楚
 - [ ] 下一步唯一推荐动作已明确
