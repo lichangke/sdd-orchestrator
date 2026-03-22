@@ -91,25 +91,25 @@
 
 ### 4.2 Specify → Plan
 至少同步：
-- `spec.md` 状态
+- `spec.md` 头部状态回写为“已确认”
 - `plan.md`（起草或准备起草）
 - `sdd-status.md`
 
 ### 4.3 Plan → Tasks
 至少同步：
-- `plan.md` 状态
+- `plan.md` 头部状态回写为“已确认”
 - `tasks.md`（起草或准备起草）
 - `sdd-status.md`
 
 ### 4.4 Tasks → Execution Contract
 至少同步：
-- `tasks.md` 状态
+- `tasks.md` 头部状态回写为“已确认”
 - `execution-contract.md`
 - `sdd-status.md`
 
 ### 4.5 Execution Contract → Implement
 至少同步：
-- `execution-contract.md` 状态
+- `execution-contract.md` 头部状态回写为“已确认”
 - `sdd-status.md`
 - 当前唯一推荐动作
 - 当前执行范围说明
