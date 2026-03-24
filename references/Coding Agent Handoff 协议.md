@@ -320,7 +320,7 @@ Coding Agent 承接的任务，只有同时满足以下条件，才算完成：
 
 ## 11. 当前版本结论
 
-本协议作为当前 Coding Agent handoff 的初稿，  
+本协议作为当前 Coding Agent handoff 的正式规则文档，  
 目标不是把所有实现行为写死，而是确保以下几件事稳定成立：
 
 1. handoff 前置条件清楚
