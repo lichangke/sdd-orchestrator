@@ -1,4 +1,4 @@
-# 《Coding Agent Handoff 协议（初稿）》
+# 《Coding Agent Handoff 协议》
 
 ## 0. 文档目的
 

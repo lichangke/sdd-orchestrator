@@ -117,7 +117,6 @@ sdd-orchestrator/
     ├── SDD 联动更新矩阵.md
     ├── Coding Agent Handoff 协议.md
     ├── 实现层入口与链路.md
-    ├── sdd-orchestrator 首次试运行方案.md
     ├── core-templates/
     │   ├── spec.md
     │   ├── plan.md
