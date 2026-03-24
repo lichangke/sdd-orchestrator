@@ -64,7 +64,7 @@
 | `execution-contract.md` | 状态更新 | `sdd-status.md` | 同步执行协议状态 | 更新状态卡 |
 | `execution-contract.md` | 内容更新 | `sdd-status.md`、当前执行摘要、必要时 `tasks.md` | 执行边界、汇报规则、验证要求变化会影响当前实现 | 同步状态，检查当前实现是否仍按有效协议推进 |
 | `review.md` | 状态更新 | `sdd-status.md` | 同步 review 状态 | 更新状态卡 |
-| `review.md` | 内容更新 | `sdd-status.md`、`tasks.md`、下一轮入口文档 | review 结论会影响项目收口、遗留项与下一轮迭代入口 | 同步结论与未完成项 |
+| `review.md` | 内容更新 | `sdd-status.md`、`tasks.md`、下一轮入口文档 | review 结论会影响项目收口、遗留项、条件项与下一轮迭代入口 | 同步结论、条件项与未完成项 |
 | `sdd-status.md` | 状态更新 | 对应主文档（必要时） | 状态卡不应长期领先或落后于主文档 | 检查主文档状态是否一致 |
 | `sdd-status.md` | 内容更新 | 当前阶段主文档、必要时 checklist | 状态卡中的阶段/中断点/下一步动作必须有依据 | 校验状态卡是否与主文档自洽 |
 
@@ -78,7 +78,7 @@
 | `plan-checklist.md` | `plan.md` | `plan.md`、`sdd-status.md` | 检查结果会影响是否进入 Tasks | 若通过，更新 Plan 状态与状态卡 |
 | `tasks-checklist.md` | `tasks.md` | `tasks.md`、`execution-contract.md`、`sdd-status.md` | 检查结果会影响是否可进入执行协议与 Implement 准备 | 若通过，推进执行协议 |
 | `implement-handoff-checklist.md` | `execution-contract.md` | `execution-contract.md`、`sdd-status.md` | 检查结果会影响是否正式进入 Implement | 若通过，切换状态与下一步动作 |
-| `review-checklist.md` | `review.md` | `review.md`、`sdd-status.md`、必要时 `tasks.md` | 检查结果会影响验收结论是否收口 | 若通过，形成正式 review 结论 |
+| `review-checklist.md` | `review.md` | `review.md`、`sdd-status.md`、必要时 `tasks.md`、下一轮入口文档 | 检查结果会影响验收结论是否收口、条件项是否需保留、以及是否开启下一轮 | 若通过，形成正式 review 结论并同步条件项 |
 
 ---
 
@@ -157,6 +157,22 @@
 - `sdd-status.md`
 - 任务完成情况
 - 验证结果摘要
+
+### 4.7 Review 收口
+至少同步：
+- `review.md` 头部状态、总体结论、结论说明、用户验收意见
+- `sdd-status.md` 中的：当前阶段、review 状态、当前中断点、下一步唯一推荐动作、当前阻塞 / 未决问题
+- `tasks.md`（如 review 结论要求保留未完成项 / 偏差项）
+- 下一轮入口文档（仅当已明确开启下一轮时）
+
+若 review 结论为“有条件通过 / 阶段性通过”，还必须同步明确：
+1. 条件项是什么
+2. 条件项是否阻断当前主线验收
+3. 条件项是否已由用户接受
+4. 若条件项涉及外部失败重试，是否已记录“再次重试仍失败”的真实结果
+
+默认原则：
+> Review 收口不只是在 review.md 写一句结论；必须把条件项、状态卡与是否开启下一轮的判断一起收口。
 
 ---
 
