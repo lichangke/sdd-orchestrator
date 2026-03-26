@@ -1,111 +1,43 @@
 # sdd-orchestrator
 
-一个面向真实项目推进的 **Spec-Driven Development（SDD）编排型 skill**。
+`sdd-orchestrator` 是一个面向真实项目推进的 **Spec-Driven Development（SDD）编排型 skill**。
 
-它不是只提供几份 `spec / plan / tasks` 模板，
-而是把以下能力一起收进一套可复用的协作框架：
+它的目标不是提供几份孤立的 `spec / plan / tasks` 模板，而是把项目推进里最容易失控的部分一起纳入显式规则：
 
-- 阶段识别与阶段门禁
-- 阶段主文档起草与收口
-- `sdd-status.md` 驱动的中断恢复
-- 文档联动更新纪律
-- Implement 前 handoff 准备
-- Review / 验收收口
-- 多轮 SDD 下的“当前轮次文档映射”
-
-当前这一版已经基于真实项目跑过两轮 SDD 实操，并做过针对性优化。
-
----
-
-## 1. 这个 skill 解决什么问题
-
-很多 SDD 实践只有模板，没有编排；
-真实项目里最容易出问题的，往往不是“不会写 spec”，而是：
-
-- 当前到底处于哪个阶段
-- 当前阶段文档是否真的已经成立
-- 能不能进入下一阶段
-- 阶段确认后哪些状态需要同步回写
-- 中断后应该从哪里恢复
-- `review.md`、`sdd-status.md` 这种固定入口文档，和 `spec-002 / plan-002` 这种编号文档怎么对应
-- 文档语义已经收口了，但仓库是否真的收成了稳定快照
-
-`sdd-orchestrator` 的目标，就是把这些高频失误点显式纳入一套编排规则，而不是继续靠记忆和临场判断硬扛。
-
----
-
-## 2. 当前能力边界
-
-这个 skill 负责：
-
-- 新项目进入 SDD 的起步编排
-- 功能级 SDD 的增量推进
-- Specify / Plan / Tasks / Execution Contract / Review 文档编排
-- 阶段切换门禁检查
-- `sdd-status.md` 状态卡维护
-- 中断恢复与文档自洽校验
-- Implement 前 handoff 准备
-- Review / 验收的结构化收口
-
-这个 skill **不负责**：
-
-- 具体技术实现细节本身
-- 某种语言或框架的编码规范
-- 大量代码级 review 细则
-- 直接替代 Coding Agent 做实现施工
+- 当前处于哪个阶段
+- 当前阶段能不能进入下一阶段
+- 阶段文档是否真的成立
+- `sdd-status.md` 如何作为恢复主锚点
+- 文档变化后哪些地方需要联动检查
+- Implement 前如何 handoff 给 Coding Agent
+- Review / 验收如何形成结构化收口
 
 一句话说：
 
-> 它负责把 SDD 协作链路编排清楚，但不负责替代实现层。
+> 这是一个管 **阶段推进、状态维护、恢复、自检、联动与交接** 的 SDD 编排器，而不是单纯的模板包。
 
 ---
 
-## 3. 当前版本的设计重点
+## 1. 这个仓库里有什么
 
-相较于普通模板包，这一版重点强化了以下能力：
+当前仓库的 skill 主体由两部分组成：
 
-### 3.1 阶段主文档必须先落盘
-对话中的草案、骨架、口头收口，不等于项目内已存在的阶段主文档。
-如果当前阶段主文档尚未正式落盘，就不能口头进入下一阶段。
+- `SKILL.md`：skill 入口，负责触发描述、核心硬规则、场景分流与最小读取路径
+- `references/`：详细规则、模板、checklist 与实现层配套说明
 
-### 3.2 阶段确认后的状态回写不可遗漏
-当阶段门禁通过时，必须先同步：
+这套结构已经可以支撑：
 
-- 当前阶段主文档头部状态
-- 若文件名表达草案语义，则检查是否需改名
-- `sdd-status.md`
-
-再开始下游阶段。
-
-### 3.3 文档头元信息必须和正文用途一致
-如果 `review.md` 或其他固定入口文档已经切换到当前轮次，
-则文档名称、所属功能 / 子功能、上游文档、时间等头部字段也必须一起切换，
-不能只换正文。
-
-### 3.4 支持多轮 SDD 的文档映射
-当前默认允许：
-
-- `spec / plan / tasks / execution-contract` 使用编号文档
-- `review.md` / `sdd-status.md` 作为固定入口文档
-
-并要求在状态卡中明确“当前有效轮次文档”与固定入口文档的映射关系。
-
-### 3.5 Review 收口支持真实复杂分支
-这一版已经明确支持：
-
-- 有条件通过 / 阶段性通过
-- 条件项是否阻断当前主线验收
-- 外部失败（如 provider cooldown）如实记录
-- 再次重试仍失败后的真实收口
-- 当前轮次已收口但暂不开启下一轮
-
-### 3.6 收口不等于自动完成仓库快照
-当已经形成“已收口 / 已通过 / 已完成”的语义时，
-还需要继续检查当前工作区是否存在与本轮收口直接相关的未提交改动。
+- 新项目进入 SDD
+- 起草 / 收口 `Specify / Plan / Tasks / Execution Contract / Review`
+- 阶段门禁判断
+- `sdd-status.md` 驱动的恢复推进
+- Implement 前 handoff 准备
+- Review / 验收收口
+- 多轮 SDD 下的轮次文档映射
 
 ---
 
-## 4. 目录结构
+## 2. skill 主体结构
 
 ```text
 sdd-orchestrator/
@@ -130,73 +62,171 @@ sdd-orchestrator/
         ├── tasks-checklist.md
         ├── implement-handoff-checklist.md
         ├── review-checklist.md
-        └── document-header-checklist.md
+        ├── document-header-checklist.md
+        ├── 模板说明.md
+        └── 清单说明.md
 ```
+
+说明：
+
+- `SKILL.md` 偏“入口层”
+- `references/` 偏“规则层 / 模板层 / 门禁层 / handoff 配套层”
+- 当前仓库没有额外脚本目录；核心价值主要在文档编排规则本身
+
+---
+
+## 3. 这个 skill 解决什么问题
+
+很多 SDD 实践的问题不在于“不会写 spec”，而在于：
+
+- 对话里的草稿和项目里的正式文档混用
+- 阶段切换靠感觉推进，没有门禁
+- `review.md`、`sdd-status.md` 与当前轮次文档脱锚
+- 文档变了，下游没有同步检查
+- Implement 交给 Coding Agent 后边界漂移
+- Review 语义已经收口，但仓库快照并没有真正收稳
+
+`sdd-orchestrator` 的作用，就是把这些高频失误点收成一套显式编排规则。
+
+---
+
+## 4. 当前设计重点
+
+这一版重点强化了以下能力：
+
+### 4.1 阶段主文档必须先落盘
+对话中的骨架、草稿、口头收口，不能替代项目内的正式阶段主文档。
+
+### 4.2 阶段确认后的状态回写不可遗漏
+阶段门禁通过后，必须同步回写：
+
+- 当前阶段主文档头部状态
+- 必要时的文件名语义
+- `sdd-status.md`
+
+### 4.3 文档头元信息必须与正文用途一致
+当固定入口文档切换到当前轮次用途时，文档头字段也必须一起切换。
+
+### 4.4 支持多轮 SDD 的轮次映射
+允许：
+
+- `spec / plan / tasks / execution-contract` 使用编号文档
+- `review.md` / `sdd-status.md` 继续作为固定入口文档
+
+并要求在状态卡中明确当前有效轮次映射。
+
+### 4.5 Review 收口不等于仓库快照自动稳定
+形成“已收口 / 已通过 / 已完成”结论后，仍需检查当前工作区是否存在与本轮收口直接相关的未提交改动。
 
 ---
 
 ## 5. 建议阅读顺序
 
-### 第一步：看 `SKILL.md`
-它负责：
-- 触发场景
-- 核心硬规则
-- 场景分流
-- 最小读取路径
+### 第一层：入口
+先看：
 
-### 第二步：看 `references/索引与导航.md`
-它负责：
-- references 内部导航
-- 文件角色说明
-- 不同场景该先读哪些文件
+- `SKILL.md`
 
-### 第三步：按场景进入对应文件
+用途：
 
-#### 如果你要理解上位规则
+- 判断这个 skill 在什么场景触发
+- 理解核心硬规则
+- 理解场景分流与最小读取路径
+
+### 第二层：导航
+再看：
+
+- `references/索引与导航.md`
+
+用途：
+
+- 理解 references 内部结构
+- 根据具体场景定位应该先读哪些文件
+
+### 第三层：按任务进入对应文件
+
+#### 如果要理解上位规则
 优先看：
+
 - `references/SDD 模板总则.md`
 - `references/SDD 联动更新矩阵.md`
 
-#### 如果你要推进阶段文档
+#### 如果要推进阶段文档
 优先看：
-- 当前阶段主模板
-- 当前阶段 checklist
+
+- 对应阶段主模板
+- 对应 checklist
 - `references/core-templates/sdd-status.md`
 
-#### 如果你要做 Review / 验收收口
+#### 如果要处理中断恢复 / 状态冲突
 优先看：
+
+- `references/core-templates/sdd-status.md`
+- `references/SDD 联动更新矩阵.md`
+- `references/checklists/document-header-checklist.md`
+
+#### 如果要进入 Implement 前 handoff
+优先看：
+
+- `references/core-templates/execution-contract.md`
+- `references/checklists/implement-handoff-checklist.md`
+- `references/Coding Agent Handoff 协议.md`
+- `references/实现层入口与链路.md`
+
+#### 如果要做 Review / 验收收口
+优先看：
+
 - `references/core-templates/review.md`
 - `references/checklists/review-checklist.md`
 - 必要时 `references/checklists/document-header-checklist.md`
 
-#### 如果你要处理中断恢复或文档自洽问题
-优先看：
-- `references/core-templates/sdd-status.md`
-- `references/SDD 联动更新矩阵.md`
-- 必要时 `references/checklists/document-header-checklist.md`
+---
+
+## 6. 能力边界
+
+这个 skill 负责：
+
+- SDD 阶段编排
+- 阶段门禁判断
+- 文档联动检查
+- `sdd-status.md` 驱动的恢复
+- Implement 前 handoff 准备
+- Review / 验收的结构化收口
+
+这个 skill 不负责：
+
+- 直接替代 Coding Agent 写具体实现
+- 某种语言 / 框架本身的编码规范
+- 大量代码级 review 细则
+- 通用项目管理软件层面的排期与资源管理
+
+边界总结：
+
+> 它解决的是 **SDD 协作编排**，不是实现施工本身。
 
 ---
 
-## 6. 安装方式（面向 OpenClaw 工作区）
+## 7. 如何同步到 runtime skill
 
-如果你只是要在 OpenClaw 工作区里手动安装这个 skill，最简单的方式就是把整个目录放到：
+如果你在同时维护：
 
-`/root/.openclaw/workspace/skills/sdd-orchestrator`
+- 仓库版：`/root/.openclaw/workspace/sdd-orchestrator`
+- runtime 版：`/root/.openclaw/workspace/skills/sdd-orchestrator`
 
-也就是保证最终至少有：
+请注意：
 
-- `/root/.openclaw/workspace/skills/sdd-orchestrator/SKILL.md`
-- `/root/.openclaw/workspace/skills/sdd-orchestrator/references/...`
+> 修改仓库版，不等于 runtime 已生效。
 
-### 从本仓库同步到 runtime skill 的常见方式
-在工作区根目录执行：
+推荐同步方式：
 
 ```bash
 mkdir -p /root/.openclaw/workspace/skills/sdd-orchestrator
-cp -r /root/.openclaw/workspace/sdd-orchestrator/* /root/.openclaw/workspace/skills/sdd-orchestrator/
+cp /root/.openclaw/workspace/sdd-orchestrator/SKILL.md /root/.openclaw/workspace/skills/sdd-orchestrator/
+rm -rf /root/.openclaw/workspace/skills/sdd-orchestrator/references
+cp -r /root/.openclaw/workspace/sdd-orchestrator/references /root/.openclaw/workspace/skills/sdd-orchestrator/
 ```
 
-如果你已经在维护仓库版与 runtime skill 双份目录，建议每次更新后至少校验这些关键文件是否一致：
+建议每次同步后至少校验这些关键文件：
 
 - `SKILL.md`
 - `references/SDD 模板总则.md`
@@ -209,39 +239,17 @@ cp -r /root/.openclaw/workspace/sdd-orchestrator/* /root/.openclaw/workspace/ski
 
 ---
 
-## 7. 维护约定
+## 8. 当前使用建议
 
-如果你同时维护：
+当前更推荐的使用方式不是继续抽象打磨，而是：
 
-- 仓库版：`/root/.openclaw/workspace/sdd-orchestrator`
-- runtime skill：`/root/.openclaw/workspace/skills/sdd-orchestrator`
+1. 用它跑真实项目
+2. 只围绕真实暴露的问题补规则
+3. 避免重新退回“凭想象补模板”的状态
 
-请注意：
+也就是说，后续迭代应优先遵循：
 
-> 修改仓库版，不等于 runtime 已生效。
-
-默认维护约定应为：
-
-1. 先改仓库版
-2. 再同步到 runtime skill
-3. 再校验关键文件一致
-4. 仅仓库版做 commit / push
-5. runtime skill 目录只做同步，不单独作为仓库发布对象
-
----
-
-## 8. 推荐使用方式
-
-当前更推荐的使用姿势不是“继续空转优化模板”，而是：
-
-1. 用这版 skill 去跑真实项目
-2. 在真实 SDD 协作里暴露问题
-3. 只修改真实出现的高频问题
-4. 避免重新退回“凭想象补规则”的状态
-
-也就是说，这个 skill 的后续迭代应当：
-
-> 以真实实操反馈驱动，而不是以抽象打磨驱动。
+> **以真实实操反馈驱动，而不是以抽象打磨驱动。**
 
 ---
 
@@ -249,12 +257,12 @@ cp -r /root/.openclaw/workspace/sdd-orchestrator/* /root/.openclaw/workspace/ski
 
 当前这一版可以视为：
 
-> **已跑过两轮真实 SDD 的可用基线版本。**
+> **已能支撑真实项目推进的 SDD 编排基线版本。**
 
-它不是终态，但已经不再只是“模板集合”，而是一套可以在真实项目中使用的 SDD 编排框架。
+它不是终态，但已经不是“几份模板的集合”，而是一套具备阶段推进、状态维护、恢复、自检、联动与 handoff 规则的协作框架。
 
 ---
 
 ## 10. 一句话总结
 
-> `sdd-orchestrator` 不是几份文档模板，而是一套把阶段推进、状态维护、恢复、自检、联动和 Review 收口一起管起来的 SDD 编排 skill。
+> `sdd-orchestrator` 是一个把 **阶段推进、状态卡、恢复、自检、文档联动和 Implement 交接** 一起管起来的 SDD 编排 skill。
