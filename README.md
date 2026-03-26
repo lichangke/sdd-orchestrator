@@ -210,8 +210,8 @@ sdd-orchestrator/
 
 如果你在同时维护：
 
-- 仓库版：`/root/.openclaw/workspace/sdd-orchestrator`
-- runtime 版：`/root/.openclaw/workspace/skills/sdd-orchestrator`
+- 仓库版：当前仓库中的 `sdd-orchestrator/`
+- runtime 版：skills 目录中的 `skills/sdd-orchestrator/`
 
 请注意：
 
@@ -220,11 +220,13 @@ sdd-orchestrator/
 推荐同步方式：
 
 ```bash
-mkdir -p /root/.openclaw/workspace/skills/sdd-orchestrator
-cp /root/.openclaw/workspace/sdd-orchestrator/SKILL.md /root/.openclaw/workspace/skills/sdd-orchestrator/
-rm -rf /root/.openclaw/workspace/skills/sdd-orchestrator/references
-cp -r /root/.openclaw/workspace/sdd-orchestrator/references /root/.openclaw/workspace/skills/sdd-orchestrator/
+mkdir -p skills/sdd-orchestrator
+cp sdd-orchestrator/SKILL.md skills/sdd-orchestrator/
+rm -rf skills/sdd-orchestrator/references
+cp -r sdd-orchestrator/references skills/sdd-orchestrator/
 ```
+
+如果你的目录布局不同，请按实际位置替换源目录与目标目录，但不要把某台机器上的绝对路径固化进文档。
 
 建议每次同步后至少校验这些关键文件：
 
